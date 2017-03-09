@@ -1,0 +1,8 @@
+dependencies:
+  - role: runit
+    runit_service_name: "gammu-smsd-{{ gammu_phoneid }}"
+    runit_service_command: "/usr/bin/gammu-smsd"
+    runit_service_params: "-c /etc/gammu.d/gammu-{{ gammu_phoneid }}.conf"
+    runit_service_env:
+      LC_CTYPE: "en_US.UTF-8"
+    runit_prometheus_stats: no

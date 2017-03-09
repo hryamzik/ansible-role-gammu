@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+[gammu]
+model = 
+device = {{ gammu_device }}
+connection = at
+synchronizetime = yes
+# logfile = /var/log/gammu-{{ gammu_phoneid }}.log
+logformat = textalldate
+
+[smsd]
+# LogFile = syslog
+LogFile = /dev/stdout
+Service = null
+RunOnReceive = {{ smsd_handler_path }}/sms_eventhandler.py -p {{ gammu_phoneid }}
+PhoneID = {{ gammu_phoneid }}
