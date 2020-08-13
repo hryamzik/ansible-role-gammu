@@ -6,3 +6,6 @@ dependencies:
     runit_service_env:
       LC_CTYPE: "en_US.UTF-8"
     runit_prometheus_stats: no
+    when: "{{ gammu_init_runit }}"
+
+allow_duplicates: yes

@@ -12,5 +12,5 @@ logformat = textalldate
 # LogFile = syslog
 LogFile = /dev/stdout
 Service = null
-RunOnReceive = {{ smsd_handler_path }}/sms_eventhandler.py -p {{ gammu_phoneid }}
+RunOnReceive = /usr/bin/logger -t {{ gammu_phoneid }} check env
 PhoneID = {{ gammu_phoneid }}

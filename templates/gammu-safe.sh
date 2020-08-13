@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # SMSD_PID=`pidof gammu-smsd`
-SMSD_PID=$(sv s gammu-smsd-{{ gammu_phoneid }} |awk {'print $4+0'})
+SMSD_PID=$(cat /etc/sv/gammu-smsd-{{ gammu_phoneid }}/supervise/pid)
 if [ -z "$SMSD_PID" ] ; then
   gammu -c /etc/gammu.d/gammu-{{ gammu_phoneid }}.conf $@
 else

@@ -1,10 +1,11 @@
 # gammu
 
-This role is designed to forward SMS to telegram or email. It disables `gammu-smsd` service and runs daemon under `runit`. May be used multiple times.
+This role is designed to install multiple `gammu-smsd` services with `runit`. It disables `gammu-smsd` service and runs daemon under `runit`. May be used multiple times.
 
 ## requirements
 [runit](https://github.com/hryamzik/ansible-role-runit.git) role
 Ubuntu 16.04
+Valid template ```gammu_template_name``` variable, default configuration doens't make much sense.
 
 ## example
 
@@ -13,25 +14,19 @@ Ubuntu 16.04
   become: yes
   roles:
     - name: gammu
-      gammu_reporting:
-        bot_key: "{{ telegram_key_user1 }}"
-        chat_id: "{{ chat_id_user1 }}"
-        mail_to: "{{ email_user1 }}"
-      gammu_phoneid: user1
+      gammu_template_name: etc/gammu.d/gammu-smsdrc-user1.j2
       gammu_device: /dev/ttyW810i
+      gammu_phoneid: phone1
       tags: sms
 
     - name: gammu
-      gammu_reporting:
-        bot_key: "{{ telegram_key_user2 }}"
-        chat_id: "{{ chat_id_user2 }}"
-        mail_to: "{{ email_user2 }}"
+      gammu_template_name: etc/gammu.d/gammu-smsdrc-user2.j2
       gammu_phoneid: orange
       gammu_device: /dev/ttyHuaweiOrange00
       tags: sms
 ``` 
 
-You may also find udev rules example useful:
+You may also find `udev` rules example useful:
 
 `99-usb-serial.rules`
 

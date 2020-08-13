@@ -1,1 +1,2 @@
-smsd_handler_path: /opt/gammu
+gammu_template_name: gammu-smsdrc-default.j2
+gammu_init_runit: yes

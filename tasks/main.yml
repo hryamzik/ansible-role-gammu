@@ -1,10 +1,7 @@
 - name: ensure required paths exist
   file: state=directory path="{{ item }}"
   with_items:
-    - "{{ smsd_handler_path }}"
     - /etc/gammu.d
-
-- template: dest={{ smsd_handler_path }}/sms_eventhandler.py src=sms_eventhandler.py mode=700 owner=root group=root
 
 - name: add gammu ppa
   apt_repository:
@@ -16,23 +13,14 @@
   with_items:
     - gammu
     - gammu-smsd
-    - python-pip
-    - python-yaml
 
 - name: stop and disable gammu-smsd
   service: name=gammu-smsd state=stopped enabled=no
 
-- name: install python-telegram-bot
-  pip: name=python-telegram-bot
-
 - name: put gammu smsd conf
   # template: dest=/etc/gammu-smsdrc src=gammu-smsdrc.j2
-  template: dest=/etc/gammu.d/gammu-{{ gammu_phoneid }}.conf src=gammu-smsdrc.j2
+  template: dest=/etc/gammu.d/gammu-{{ gammu_phoneid }}.conf src={{ gammu_template_name }}
   notify: runit reload gammu-smsd-{{ gammu_phoneid }}
-  tags: conf
-  
-- name: put reporting conf
-  copy: content="{{ gammu_reporting|to_nice_yaml }}" dest=/etc/gammu.d/report-{{ gammu_phoneid }}.yml mode=600 owner=root group=root
   tags: conf
 
 - name: install gammu-safe
